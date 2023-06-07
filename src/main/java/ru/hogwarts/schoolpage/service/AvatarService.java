@@ -1,5 +1,7 @@
 package ru.hogwarts.schoolpage.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.querydsl.QPageRequest;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 @Service
 public class AvatarService {
 
+    private final Logger logger = LoggerFactory.getLogger(AvatarService.class);
     private final AvatarRepository avatarRepository;
     private final StudentRepository studentRepository;
 
@@ -40,6 +43,7 @@ public class AvatarService {
 
     public void upload(long studentID, MultipartFile multipartFile) {
         try {
+            logger.info("Uploading avatar for student with id = {}", studentID);
             Student student = studentRepository.findById(studentID)
                     .orElseThrow(StudentNotFoundException::new);
             String fileName = String.format(
@@ -60,6 +64,7 @@ public class AvatarService {
             avatarRepository.save(avatar);
 
         } catch (IOException e){
+            logger.error(e.getMessage(),e);
             throw new AvatarProcessException();
         }
 
@@ -80,6 +85,7 @@ public class AvatarService {
             Path path = Paths.get(avatar.getFilePath());
             return Pair.of(Files.readAllBytes(path), avatar.getMediaType());
         } catch (IOException e) {
+            logger.error(e.getMessage(),e);
             throw  new AvatarProcessException();
         }
         }

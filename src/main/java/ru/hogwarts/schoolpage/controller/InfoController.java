@@ -10,18 +10,25 @@ import ru.hogwarts.schoolpage.service.InfoService;
 @RequestMapping("/info")
 public class InfoController {
 
-    private final int port;
+    private final InfoService infoService;
 
-    public InfoController(@Value("${server.port}") int port) {
-        this.port = port;
-    }
-
-    @GetMapping("/port")
-    public int getPort() {
-        return port;
+    public InfoController(InfoService infoService) {
+        this.infoService = infoService;
     }
     @GetMapping
     public void testParallelStream() {
       InfoService.testParallelStream();
     }
+
+    @GetMapping("/printStudents")
+    public void printStudents() {
+        InfoService.printStudents();
+    }
+
+    @GetMapping("/printStudentsSync")
+    public void printStudentsSync() {
+        InfoService.printStudentsSync();
+    }
+
+
 }

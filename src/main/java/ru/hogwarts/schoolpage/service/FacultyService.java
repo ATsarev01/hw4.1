@@ -5,11 +5,9 @@ import ru.hogwarts.schoolpage.entity.Faculty;
 import ru.hogwarts.schoolpage.entity.Student;
 import ru.hogwarts.schoolpage.repository.FacultyRepository;
 import ru.hogwarts.schoolpage.repository.StudentRepository;
+import ru.hogwarts.schoolpage.exception.FacultyNotFoundException;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class FacultyService {
@@ -66,4 +64,10 @@ public class FacultyService {
         return studentRepository.findAllByFaculty_Id(id);
     }
 
+    public String findTheLongestFaculty() {
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparing(String::length))
+                .orElseThrow(FacultyNotFoundException::new);
+    }
 }

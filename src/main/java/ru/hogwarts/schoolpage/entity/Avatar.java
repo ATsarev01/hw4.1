@@ -3,6 +3,7 @@ package ru.hogwarts.schoolpage.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "avatars")
 public class Avatar {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)

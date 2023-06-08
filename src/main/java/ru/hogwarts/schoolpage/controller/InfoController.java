@@ -17,17 +17,17 @@ public class InfoController {
     }
     @GetMapping
     public void testParallelStream() {
-      InfoService.testParallelStream();
+      infoService.testParallelStream();
     }
 
     @GetMapping("/printStudents")
     public void printStudents() {
-        InfoService.printStudents();
+        infoService.printStudents();
     }
 
     @GetMapping("/printStudentsSync")
     public void printStudentsSync() {
-        InfoService.printStudentsSync();
+        infoService.printStudentsSync();
     }
 
 

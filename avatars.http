@@ -1,0 +1,13 @@
+POST http://localhost:8080/avatar?studentId=1
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="avatar"; filename="avatar.png"
+Content-Type: image/png
+
+<./avatar.png
+--WebAppBoundary
+
+###
+
+GET http://localhost:8080/avatar?page=0&size=3

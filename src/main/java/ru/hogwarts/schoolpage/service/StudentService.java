@@ -3,12 +3,15 @@ package ru.hogwarts.schoolpage.service;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.schoolpage.entity.Faculty;
 import ru.hogwarts.schoolpage.entity.Student;
+import ru.hogwarts.schoolpage.exception.StudentNotFoundException;
 import ru.hogwarts.schoolpage.repository.FacultyRepository;
 import ru.hogwarts.schoolpage.repository.StudentRepository;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 public class StudentService {
@@ -76,5 +79,32 @@ public class StudentService {
     public Optional<Faculty> getFacultyByStudentId(long id) {
         return studentRepository.findById(id)
                 .map(Student::getFaculty);
+    }
+
+    public int getCountOfStudents() {
+        return studentRepository.getCountOfStudents();
+    }
+
+    public double getAverageAgeOfStudents() {
+        return studentRepository.getAverageAgeOfStudents();
+    }
+
+    public List<Student> getLastStudents(int count) {
+        return studentRepository.getLastStudents(count);
+    }
+
+    public Stream<String> findStudentsNamedWithA() {
+        return studentRepository.findAll().stream()
+                .map(Student::getName)
+                .map(String::toUpperCase)
+                .filter(s -> s.startsWith("A"))
+                .sorted();
+    }
+
+    public double findStudentAverageAge() {
+        return studentRepository.findAll().stream()
+                .mapToDouble(Student::getAge)
+                .average()
+                .orElseThrow(StudentNotFoundException::new);
     }
 }

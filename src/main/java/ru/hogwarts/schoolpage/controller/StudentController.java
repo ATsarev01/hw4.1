@@ -7,7 +7,9 @@ import ru.hogwarts.schoolpage.entity.Student;
 import ru.hogwarts.schoolpage.service.StudentService;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/student")
@@ -55,6 +57,33 @@ public class StudentController {
     @GetMapping("/{id}/faculty")
     public Optional<Faculty> getFacultyByStudentId(@PathVariable long id) {
         return studentService.getFacultyByStudentId(id);
+    }
+
+    @GetMapping("/count")
+    public int getCountOfStudents() {
+        return studentService.getCountOfStudents();
+
+    }
+
+    @GetMapping("/averageAge")
+    public double getAverageAgeOfStudents() {
+        return studentService.getAverageAgeOfStudents();
+
+    }
+
+    @GetMapping("/lastStudents")
+    public List<Student> getLastStudents(@RequestParam(value = "count", defaultValue = "5") int count) {
+        return studentService.getLastStudents(count);
+
+    }
+
+    @GetMapping("/findStudentsNamedWithA")
+    public Stream<String> findStudentsNamedWithA() {
+        return studentService.findStudentsNamedWithA();
+    }
+    @GetMapping("/findStudentAverageAge")
+    public double findStudentAverageAge() {
+        return studentService.findStudentAverageAge();
     }
 
 
